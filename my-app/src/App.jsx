@@ -9,10 +9,15 @@ function App() {
   useEffect(() => {
     setNamaResto("Cafe and Resto Codepolitan");
   }, []);
+
+  var handleBtnOnChange = (props) => {
+    setNamaResto(props);
+  };
   
   return (
     <div className="App">
         <h1>{namaResto}</h1>
+        <button onClick={()=> handleBtnOnChange('Programming')}>Ganti Nama</button>
         <h2>Menu Makanan</h2>
         <MenuMakanan namaMenu={"Ayam Bakar"} hargaMenu={"25000"}/>
         
