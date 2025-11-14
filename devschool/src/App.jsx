@@ -74,6 +74,16 @@ function App() {
     }
     setFirstName("");
     setLastName("");
+    setUserID("");
+  }
+
+  async function deleteUser(props) {
+    try {
+      const response = await axios.delete(`${apiLink}/${props.getUserId}`);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
@@ -93,7 +103,7 @@ function App() {
                     <h5 className="card-title">{user.firstName}</h5>
                     <h5 className="card-title">{user.lastName}</h5>
                     <button className="btn btn-primary" onClick={()=> handleBtnEdit({'getUserId': user.id, 'getUserFirstName': user.firstName, 'getUserLastName': user.lastName})}>Edit</button>
-                    <button className="btn btn-danger">Delete</button>
+                    <button className="btn btn-danger" onClick={() => deleteUser({'getUserId': user.id})}>Delete</button>
                   </div>
                 </div>
               </div>
