@@ -5,15 +5,33 @@ import axios from 'axios'
 function App() {
 
   var [users, setUsers] = useState(null);
+  var [firstName, setFirstName] = useState("");
+  var [lastName, setLastName] = useState("");
+
+  const apiLink = 'https://65f45089f54db27bc021609a.mockapi.io/users';
 
   async function getUser() {
     try {
-      const response = await axios.get('https://65f45089f54db27bc021609a.mockapi.io/users');
+      const response = await axios.get(apiLink);
       return response.data;
     } catch (error) {
       console.error(error);
     }
   }
+
+  async function postUser() {
+    try {
+      const response = await axios.post(apiLink, {
+        firstName: firstName,
+        lastName: lastName,
+      });
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 
   useEffect(() => {
     async function fetchDataUsers() {
@@ -23,6 +41,14 @@ function App() {
 
     fetchDataUsers();
   }, [])
+
+  function firstNameOnChange(event) {
+    setFirstName(event.target.value);
+  };
+
+  function lastNameOnChange(event) {
+    setLastName(event.target.value)
+  }
 
   return (
       <div className="container">
@@ -60,16 +86,18 @@ function App() {
                 <input 
                   type="text" 
                   className="form-control"
+                  onChange={firstNameOnChange}
                 />
               </div>
               <div className="form-group">
                 <label>Last Name</label>
                 <input 
                   type="text" 
-                  className="form-control" 
+                  className="form-control"
+                  onChange={lastNameOnChange} 
                 />
               </div>
-              <button type="submit" className="btn btn-primary">Submit</button>
+              <button type="button" className="btn btn-primary" onClick={()=> postUser()}>Submit</button>
             </form>
           </div>
         </div>
