@@ -29,6 +29,7 @@ function App() {
       });
 
       console.log(response.data);
+      refreshUsers();
     } catch (error) {
       console.error(error);
     }
@@ -69,6 +70,7 @@ function App() {
       });
       
       console.log(response);
+      refreshUsers();
     } catch (error) {
       console.log(error);
     }
@@ -81,6 +83,16 @@ function App() {
     try {
       const response = await axios.delete(`${apiLink}/${props.getUserId}`);
       console.log(response);
+      refreshUsers();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function refreshUsers() {
+    try {
+      const users = await getUser();
+      setUsers(users);
     } catch (error) {
       console.log(error);
     }
