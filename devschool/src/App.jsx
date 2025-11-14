@@ -7,6 +7,8 @@ function App() {
   var [users, setUsers] = useState(null);
   var [firstName, setFirstName] = useState("");
   var [lastName, setLastName] = useState("");
+  var [userID, setUserID] = useState("");
+  var [editForm, setEditForm] = useState(false);
 
   const apiLink = 'https://65f45089f54db27bc021609a.mockapi.io/users';
 
@@ -30,6 +32,8 @@ function App() {
     } catch (error) {
       console.error(error);
     }
+    setFirstName("");
+    setLastName("");
   }
 
 
@@ -50,6 +54,29 @@ function App() {
     setLastName(event.target.value)
   }
 
+  function handleBtnEdit(props) {
+    setEditForm(true)
+    setUserID(props.getUserId);
+    setFirstName(props.getUserFirstName ?? "");
+    setLastName(props.getUserLastName ?? "");
+  }
+
+  async function updateUser() {
+    try {
+      const response = await axios.put(`${apiLink}/${userID}`, {
+        firstName: firstName,
+        lastName: lastName,
+      });
+      
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+    setFirstName("");
+    setLastName("");
+  }
+
+
   return (
       <div className="container">
         <h1>Codepolitan DevSchool</h1>
@@ -65,7 +92,7 @@ function App() {
                   <h5 className="card-title">ID Member: {user.id}</h5>
                     <h5 className="card-title">{user.firstName}</h5>
                     <h5 className="card-title">{user.lastName}</h5>
-                    <button className="btn btn-primary">Edit</button>
+                    <button className="btn btn-primary" onClick={()=> handleBtnEdit({'getUserId': user.id, 'getUserFirstName': user.firstName, 'getUserLastName': user.lastName})}>Edit</button>
                     <button className="btn btn-danger">Delete</button>
                   </div>
                 </div>
@@ -77,29 +104,57 @@ function App() {
           </div>
           
 
-
-          <div className="col-6" style={{ border: '1px solid black'}}>
-            <h2>Form</h2>
-            <form>
-              <div className="form-group">
-                <label>First Name</label>
-                <input 
-                  type="text" 
-                  className="form-control"
-                  onChange={firstNameOnChange}
-                />
-              </div>
-              <div className="form-group">
-                <label>Last Name</label>
-                <input 
-                  type="text" 
-                  className="form-control"
-                  onChange={lastNameOnChange} 
-                />
-              </div>
-              <button type="button" className="btn btn-primary" onClick={()=> postUser()}>Submit</button>
-            </form>
-          </div>
+          {editForm ? 
+            <div className="col-6" style={{ border: '1px solid black'}}>
+              <h2>Edit Form</h2>
+              <form>
+                <div className="form-group">
+                  <label>First Name</label>
+                  <input 
+                    type="text" 
+                    className="form-control"
+                    onChange={firstNameOnChange}
+                    value={firstName}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Last Name</label>
+                  <input 
+                    type="text" 
+                    className="form-control"
+                    onChange={lastNameOnChange}
+                    value={lastName}
+                  />
+                </div>
+                <button type="button" className="btn btn-primary" onClick={() => updateUser()}>Submit</button>
+              </form>
+            </div> 
+          :
+            <div className="col-6" style={{ border: '1px solid black'}}>
+              <h2>Form</h2>
+              <form>
+                <div className="form-group">
+                  <label>First Name</label>
+                  <input 
+                    type="text" 
+                    className="form-control"
+                    onChange={firstNameOnChange}
+                    value={firstName}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Last Name</label>
+                  <input 
+                    type="text" 
+                    className="form-control"
+                    onChange={lastNameOnChange}
+                    value={lastName}
+                  />
+                </div>
+                <button type="button" className="btn btn-primary" onClick={()=> postUser()}>Submit</button>
+              </form>
+            </div>
+          }
         </div>
       </div>
   )
