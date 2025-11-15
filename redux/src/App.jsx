@@ -3,6 +3,7 @@ import Form from './components/Form'
 import List from './components/List'
 import { Provider } from 'react-redux'
 import store from './store/store'
+import NotesList from './components/NotesList'
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
       <div className="container">
         <Form />
         <List />
+        <NotesList />
       </div>
     </Provider>
   )
