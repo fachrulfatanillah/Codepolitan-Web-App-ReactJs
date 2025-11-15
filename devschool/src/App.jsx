@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import axios from 'axios'
 
+import Member from './components/Members/Members'
+import Form from './components/Form/Form';
+
 function App() {
 
   var [users, setUsers] = useState(null);
@@ -71,6 +74,7 @@ function App() {
       
       console.log(response);
       refreshUsers();
+      setEditForm(false);
     } catch (error) {
       console.log(error);
     }
@@ -107,19 +111,12 @@ function App() {
             <h2>Member</h2>
             <div className="row" >
             {users != null ? 
-              users.map((user) => 
-              <div className="col-md-6" key={user.id}>
-                <div className="card" style={{ margin: 10}}>
-                  <div className="card-body">
-                  <h5 className="card-title">ID Member: {user.id}</h5>
-                    <h5 className="card-title">{user.firstName}</h5>
-                    <h5 className="card-title">{user.lastName}</h5>
-                    <button className="btn btn-primary" onClick={()=> handleBtnEdit({'getUserId': user.id, 'getUserFirstName': user.firstName, 'getUserLastName': user.lastName})}>Edit</button>
-                    <button className="btn btn-danger" onClick={() => deleteUser({'getUserId': user.id})}>Delete</button>
-                  </div>
-                </div>
-              </div>
-            ) :
+              <Member
+                members={users}
+                handleBtnEdit={handleBtnEdit}
+                deleteUser={deleteUser}
+              />
+             :
             null
             }
             </div>
@@ -127,55 +124,23 @@ function App() {
           
 
           {editForm ? 
-            <div className="col-6" style={{ border: '1px solid black'}}>
-              <h2>Edit Form</h2>
-              <form>
-                <div className="form-group">
-                  <label>First Name</label>
-                  <input 
-                    type="text" 
-                    className="form-control"
-                    onChange={firstNameOnChange}
-                    value={firstName}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Last Name</label>
-                  <input 
-                    type="text" 
-                    className="form-control"
-                    onChange={lastNameOnChange}
-                    value={lastName}
-                  />
-                </div>
-                <button type="button" className="btn btn-primary" onClick={() => updateUser()}>Submit</button>
-              </form>
-            </div> 
+            <Form 
+              title={'Edit Form'}
+              firstName={firstName}
+              lastName={lastName}
+              onChangeFirstName={firstNameOnChange}
+              onChangeLastName={lastNameOnChange}
+              onSubmit={updateUser}
+            />
           :
-            <div className="col-6" style={{ border: '1px solid black'}}>
-              <h2>Form</h2>
-              <form>
-                <div className="form-group">
-                  <label>First Name</label>
-                  <input 
-                    type="text" 
-                    className="form-control"
-                    onChange={firstNameOnChange}
-                    value={firstName}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Last Name</label>
-                  <input 
-                    type="text" 
-                    className="form-control"
-                    onChange={lastNameOnChange}
-                    value={lastName}
-                  />
-                </div>
-                <button type="button" className="btn btn-primary" onClick={()=> postUser()}>Submit</button>
-              </form>
-            </div>
+            <Form 
+              title={'Form'}
+              firstName={firstName}
+              lastName={lastName}
+              onChangeFirstName={firstNameOnChange}
+              onChangeLastName={lastNameOnChange}
+              onSubmit={postUser}
+            />
           }
         </div>
       </div>
