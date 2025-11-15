@@ -8,15 +8,15 @@ import intensiveBootcamp from '../assets/4b58750ae834fd09e2fe339647e31aa3.jpg'
 const DevSchool = () => {
     const intro = {
         content: 
-        `Program pelatihan belajar pemrograman 
-        dengan tatap muka secara offline dan 
-        dengan bimbingan para instruktur profesional. 
-        Peserta akan belajar dengan kurikulum yang 
-        berorientasi pada industri dengan teknologi 
-        terbaru dengan konsentrasi utama yaitu 
-        pemrograman web dan Android. Saat ini 
-        program diselenggarakan di 2 kota besar, 
-        yaitu Bandung dan Jakarta.`
+            `Program pelatihan belajar pemrograman 
+            dengan tatap muka secara offline dan 
+            dengan bimbingan para instruktur profesional. 
+            Peserta akan belajar dengan kurikulum yang 
+            berorientasi pada industri dengan teknologi 
+            terbaru dengan konsentrasi utama yaitu 
+            pemrograman web dan Android. Saat ini 
+            program diselenggarakan di 2 kota besar, 
+            yaitu Bandung dan Jakarta.`
     }
 
     const cards = [
